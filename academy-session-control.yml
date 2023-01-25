@@ -23,7 +23,7 @@ spec:
   source:
     repoURL: https://github.com/lijcam/headsail.git
     targetRevision: HEAD
-    path: tracks/track-1
+    path: headsail/session/1
   destination:
     namespace: academy-session-control
     server: https://kubernetes.default.svc
