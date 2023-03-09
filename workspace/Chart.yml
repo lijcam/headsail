@@ -1,0 +1,4 @@
+apiVersion: v3
+name: workspaces
+description: A Helm chart to provision student resources
+version: 0.0.1

@@ -1,14 +1,6 @@
 # Development application environment
 
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: academy-session-control
-  labels:
-    argocd.argoproj.io/managed-by: openshift-gitops
-
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -22,8 +14,7 @@ spec:
       selfHeal: false
   source:
     repoURL: https://github.com/lijcam/headsail.git
-    targetRevision: HEAD
-    path: headsail/session/1
+    path: workspace
   destination:
     namespace: academy-session-control
     server: https://kubernetes.default.svc

@@ -1,0 +1,47 @@
+{{- range $i := until (int .Values.studentCount) }}
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: student-{{ $i }}-production
+  namespace: openshift-gitops
+  labels:
+    student: {{ $i }}
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+  source:
+    repoURL: https://github.com/lijcam/headsail.git
+    targetRevision: HEAD
+    path: headsail/session/1
+  destination:
+    namespace: production-student-{{ $i }}
+    server: https://kubernetes.default.svc
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: development-{{ $i }}
+  namespace: openshift-gitops
+  labels:
+    student: {{ $i }}
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+  source:
+    repoURL: https://github.com/lijcam/headsail.git
+    targetRevision: HEAD
+    path: headsail/session/1
+  destination:
+    namespace: development-student-{{ $i }}
+    server: https://kubernetes.default.svc
+
+{{- end }}
