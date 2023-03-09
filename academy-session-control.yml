@@ -15,7 +15,11 @@ spec:
   source:
     repoURL: https://github.com/lijcam/headsail.git
     path: ./workspace
-    targetRevision: 0.0.1
+    targetRevision: HEAD
+    helm:
+      parameters:
+        - name: studentCount
+          value: "2"
   destination:
     namespace: academy-session-control
     server: https://kubernetes.default.svc
