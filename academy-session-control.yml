@@ -14,7 +14,8 @@ spec:
       selfHeal: false
   source:
     repoURL: https://github.com/lijcam/headsail.git
-    path: workspace
+    path: ./workspace
+    targetRevision: 0.0.1
   destination:
     namespace: academy-session-control
     server: https://kubernetes.default.svc
