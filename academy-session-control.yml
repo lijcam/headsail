@@ -6,6 +6,8 @@ kind: Application
 metadata:
   name: academy-session-control
   namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   syncPolicy:
