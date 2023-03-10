@@ -42,7 +42,7 @@ metadata:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: development-student-{{ $i }}
+  name: student-{{ $i }}-development
   namespace: openshift-gitops
   labels:
     student: {{ $i }}
