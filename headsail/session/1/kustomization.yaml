@@ -1,6 +1,0 @@
----
-bases:
-  - ../../base
-
-resources:
-  - ../../challenges/challenge-1

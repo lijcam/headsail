@@ -17,7 +17,7 @@ spec:
   source:
     repoURL: https://github.com/lijcam/headsail.git
     targetRevision: HEAD
-    path: headsail/session/1
+    path: content/challenges/challenge-1
   destination:
     namespace: production-student-{{ $i }}
     server: https://kubernetes.default.svc
@@ -39,7 +39,7 @@ spec:
   source:
     repoURL: https://github.com/lijcam/headsail.git
     targetRevision: HEAD
-    path: headsail/session/1
+    path: content/challenges/challenge-1
   destination:
     namespace: development-student-{{ $i }}
     server: https://kubernetes.default.svc

@@ -1,0 +1,52 @@
+---
+# Leaderboard microservice components.
+
+---
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: leaderboard
+  labels:
+    app: leaderboard
+    app.kubernetes.io/component: leaderboard
+    app.kubernetes.io/instance: leaderboard
+    app.kubernetes.io/name: leaderboard
+    app.kubernetes.io/part-of: tailspin
+    app.openshift.io/runtime: dotnet
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: leaderboard
+  template:
+    metadata:
+      labels:
+        app: leaderboard
+    spec:
+      containers:
+        - name: leaderboard
+          image: quay.io/lijcam/space-game-leaderboard:326
+          ports:
+          - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: leaderboard
+  labels:
+    app: leaderboard
+    app.kubernetes.io/component: leaderboard
+    app.kubernetes.io/instance: leaderboard
+    app.kubernetes.io/name: leaderboard
+    app.kubernetes.io/part-of: tailspin
+
+spec:
+    type: ClusterIP
+    ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+    selector:
+        app: leaderboard
