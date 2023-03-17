@@ -25,7 +25,7 @@ metadata:
   name: argocd-env-secret
 data:
   ARGOCD_USERNAME: admin
-  ARGOCD_PASSWORD: (lookup "v1" "Secret" "openshift-gitops").data.admin.password)
+  ARGOCD_PASSWORD: (lookup "v1" "Secret" "openshift-gitops" "argocd-secret").data.admin.password)
 
 ---
 apiVersion: v1
