@@ -1,4 +1,32 @@
 {{- range $i := until (int .Values.studentCount) }}
+{{- $secret := exec "oc" (list "get" "secret" "argocd-secret" "-n" "openshift-gitops" "-o" "jsonpath='{.data.admin\.password}'") }}
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  auxiliary-student-{{ $i }}
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: auxiliary-student-{{ $i }}
+  name: argocd-env-configmap
+data:
+  ARGOCD_SERVER: openshift-gitops-server-openshift-gitops.apps.cluster-vvmmn.vvmmn.sandbox174.opentlc.com
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: auxiliary-student-{{ $i }}
+  name: argocd-env-secret
+data:
+  ARGOCD_USERNAME: admin
+  ARGOCD_PASSWORD: {{ $secret }}
 
 ---
 apiVersion: v1
