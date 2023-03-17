@@ -1,5 +1,4 @@
 {{- range $i := until (int .Values.studentCount) }}
-{{- $secret := exec "oc" (list "get" "secret" "argocd-secret" "-n" "openshift-gitops" "-o" "jsonpath='{.data.admin\.password}'") }}
 
 ---
 apiVersion: v1
@@ -26,7 +25,7 @@ metadata:
   name: argocd-env-secret
 data:
   ARGOCD_USERNAME: admin
-  ARGOCD_PASSWORD: {{ $secret }}
+  ARGOCD_PASSWORD: (lookup "v1" "Secret" "openshift-gitops").data.admin.password)
 
 ---
 apiVersion: v1
