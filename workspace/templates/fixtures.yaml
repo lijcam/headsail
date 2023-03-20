@@ -52,3 +52,13 @@ users:
 {{- range $i := until (int .Values.studentCount) }}
   - auxiliary-student-{{ add1 $i }}
 {{- end }}
+
+---
+kind: Group
+apiVersion: user.openshift.io/v1
+metadata:
+  name: cluster-admins
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+users:
+  - admin
