@@ -1,0 +1,53 @@
+{{- range $i := until (int .Values.studentCount) 1 }}
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  auxiliary-student-{{ $i }}
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: auxiliary-student-{{ $i }}
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production-student-{{ $i }}
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  development-student-{{ $i }}
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+
+{{-end }}
+
+---
+kind: Group
+apiVersion: user.openshift.io/v1
+metadata:
+  name: student-workspaces
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+users:
+{{- range $i := until (int $.Values.studentCount) 1 }}
+  - auxiliary-student-{{ $i }}
+{{- end }}
