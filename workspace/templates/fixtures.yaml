@@ -15,6 +15,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: auxiliary-student-{{ add1 $i }}
+  namespace: auxiliary-student-{{ add1 $i }}
   annotations:
     argocd.argoproj.io/hook: PreSync
 
