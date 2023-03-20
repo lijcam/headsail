@@ -1,10 +1,10 @@
-{{- range $i := until (int .Values.studentCount) 1 }}
+{{- range $i := until (int .Values.studentCount) }}
 
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name:  auxiliary-student-{{ $i }}
+  name:  auxiliary-student-{{ add1 $i }}
   annotations:
     argocd.argoproj.io/hook: PreSync
   labels:
@@ -14,7 +14,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: auxiliary-student-{{ $i }}
+  name: auxiliary-student-{{ add1 $i }}
   annotations:
     argocd.argoproj.io/hook: PreSync
 
@@ -22,7 +22,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: production-student-{{ $i }}
+  name: production-student-{{ add1 $i }}
   annotations:
     argocd.argoproj.io/hook: PreSync
   labels:
@@ -32,13 +32,13 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name:  development-student-{{ $i }}
+  name:  development-student-{{ add1 $i }}
   annotations:
     argocd.argoproj.io/hook: PreSync
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
 
-{{-end }}
+{{- end }}
 
 ---
 kind: Group
@@ -48,6 +48,6 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
 users:
-{{- range $i := until (int $.Values.studentCount) 1 }}
-  - auxiliary-student-{{ $i }}
+{{- range $i := until (int .Values.studentCount) }}
+  - auxiliary-student-{{ add1 $i }}
 {{- end }}

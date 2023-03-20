@@ -17,7 +17,6 @@
 #  name: argocd-env-secret
 #data:
 #  ARGOCD_USERNAME: admin
-#  ARGOCD_PASSWORD: {{ $admin_password }}
 
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -26,7 +25,7 @@ metadata:
   name: student-{{ $i }}-production
   namespace: openshift-gitops
   labels:
-    student: "{{ $i }}"
+    student: "{{ add1 $i }}"
 spec:
   project: default
   syncPolicy:
@@ -38,17 +37,17 @@ spec:
     targetRevision: HEAD
     path: content/challenges/challenge-1
   destination:
-    namespace: production-student-{{ $i }}
+    namespace: production-student-{{ add1 $i }}
     server: https://kubernetes.default.svc
 
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: student-{{ $i }}-development
+  name: student-{{ add1 $i }}-development
   namespace: openshift-gitops
   labels:
-    student: "{{ $i }}"
+    student: "{{ add1 $i }}"
 spec:
   project: default
   syncPolicy:
@@ -60,7 +59,7 @@ spec:
     targetRevision: HEAD
     path: content/challenges/challenge-1
   destination:
-    namespace: development-student-{{ $i }}
+    namespace: development-student-{{ add1 $i }}
     server: https://kubernetes.default.svc
 
 {{- end }}
