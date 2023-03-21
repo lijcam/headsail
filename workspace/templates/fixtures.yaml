@@ -86,6 +86,6 @@ data:
 {{- $argocd_secret := (lookup "v1" "Secret" "openshift-gitops" "argocd-secret") }}
 {{- if $argocd_secret -}}
   {{- $admin_password := index $argocd_secret "data" "admin.password" }}
-  ARGOCD_PASSWORD: {{ $admin_password }}
+  ARGOCD_PASSWORD: {{ $admin_password | b64enc }}
 {{- end }}
 {{- end }}
