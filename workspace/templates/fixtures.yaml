@@ -6,7 +6,7 @@ kind: Namespace
 metadata:
   name:  auxiliary-student-{{ add1 $i }}
   annotations:
-    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-1"
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
 
@@ -17,7 +17,7 @@ metadata:
   name: auxiliary-student-{{ add1 $i }}
   namespace: auxiliary-student-{{ add1 $i }}
   annotations:
-    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-1"
 
 {{- end }}
 
@@ -27,7 +27,7 @@ apiVersion: user.openshift.io/v1
 metadata:
   name: student-workspaces
   annotations:
-    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-1"
 users:
 {{- range $i := until (int .Values.studentCount) }}
   - auxiliary-student-{{ add1 $i }}
@@ -39,6 +39,6 @@ apiVersion: user.openshift.io/v1
 metadata:
   name: cluster-admins
   annotations:
-    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-1"
 users:
   - admin
