@@ -83,7 +83,7 @@ metadata:
   name: argocd-env-secret
 type: Opaque
 data:
-  ARGOCD_USERNAME: {{ admin | b64enc }}
+  ARGOCD_USERNAME: {{ "admin" | b64enc }}
 {{- $argocd_secret := (lookup "v1" "Secret" "openshift-gitops" "argocd-secret") }}
 {{- if $argocd_secret -}}
   {{- $admin_password := index $argocd_secret "data" "admin.password" }}
