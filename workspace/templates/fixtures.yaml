@@ -74,6 +74,7 @@ roleRef:
 # Syncwave 0
 #
 
+{{- range $i := until (int .Values.studentCount) }}
 ---
 apiVersion: v1
 kind: Secret
@@ -86,4 +87,5 @@ data:
 {{- if $argocd_secret -}}
   {{- $admin_password := index $argocd_secret "data" "admin.password" }}
   ARGOCD_PASSWORD: {{ $admin_password }}
+{{- end }}
 {{- end }}
