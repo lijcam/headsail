@@ -6,7 +6,7 @@ kind: Namespace
 metadata:
   name:  auxiliary-student-{{ add1 $i }}
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "-2"
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
 
@@ -17,20 +17,8 @@ metadata:
   name: auxiliary-student-{{ add1 $i }}
   namespace: auxiliary-student-{{ add1 $i }}
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "-2"
 
-{{- end }}
-
----
-kind: Group
-apiVersion: user.openshift.io/v1
-metadata:
-  name: student-workspaces
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-users:
-{{- range $i := until (int .Values.studentCount) }}
-  - auxiliary-student-{{ add1 $i }}
 {{- end }}
 
 ---
@@ -42,3 +30,35 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 users:
   - admin
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: headsail-secret-reader
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: headsail-secret-reader-binding
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+subjects:
+{{- range $i := until (int .Values.studentCount) }}
+  - kind: ServiceAccount
+    name: auxiliary-student-{{ add1 $i }}
+    namespace: auxiliary-student-{{ add1 $i }}
+{{- end }}
+roleRef:
+  kind: Role
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
