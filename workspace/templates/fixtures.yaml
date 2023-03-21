@@ -60,5 +60,5 @@ subjects:
 {{- end }}
 roleRef:
   kind: Role
-  name: secret-reader
+  name: headsail-secret-reader
   apiGroup: rbac.authorization.k8s.io
