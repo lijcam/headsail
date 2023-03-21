@@ -85,6 +85,6 @@ type: Opaque
 data:
   ARGOCD_USERNAME: {{ "admin" | b64enc }}
 {{- $argocd_secret := (lookup "v1" "Secret" "openshift-gitops" "argocd-secret") }}
-{{- $admin_password := index $argocd_secret "data" "admin.password" }}
+{{- $admin_password := index $argocd_secret "data.\"admin.password\"" }}
   ARGOCD_PASSWORD: {{ $admin_password | b64enc }}
 {{- end }}
