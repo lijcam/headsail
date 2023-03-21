@@ -19,26 +19,6 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
 
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: production-student-{{ add1 $i }}
-  annotations:
-    argocd.argoproj.io/hook: PreSync
-  labels:
-    argocd.argoproj.io/managed-by: openshift-gitops
-
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name:  development-student-{{ add1 $i }}
-  annotations:
-    argocd.argoproj.io/hook: PreSync
-  labels:
-    argocd.argoproj.io/managed-by: openshift-gitops
-
 {{- end }}
 
 ---
