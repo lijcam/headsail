@@ -73,4 +73,14 @@ roleRef:
 # Syncwave 0
 #
 
-
+ {{- range $i := until (int .Values.studentCount) }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: auxiliary-student-{{ add1 $i }}
+  name: argocd-env-secret
+type: Opaque
+data:
+  ARGOCD_USERNAME: {{ "admin" | b64enc }}
+{{- end }}
