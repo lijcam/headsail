@@ -1,0 +1,81 @@
+{{- range $i := until (int .Values.studentCount) }}
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production-student-{{ add1 $i }}
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  development-student-{{ add1 $i }}
+  labels:
+    argocd.argoproj.io/managed-by: openshift-gitops
+
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  namespace: auxiliary-student-{{ $i }}
+#  name: argocd-env-configmap
+#data:
+#  ARGOCD_SERVER: openshift-gitops-server-openshift-gitops.apps.cluster-vvmmn.vvmmn.sandbox174.opentlc.com
+
+#---
+#apiVersion: v1
+#kind: Secret
+#metadata:
+#  namespace: auxiliary-student-{{ $i }}
+#  name: argocd-env-secret
+#data:
+#  ARGOCD_USERNAME: admin
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: student-{{ add1 $i }}-production
+  namespace: openshift-gitops
+  labels:
+    student: "{{ add1 $i }}"
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+  source:
+    repoURL: https://github.com/lijcam/headsail.git
+    targetRevision: HEAD
+    path: content/challenges/challenge-1
+  destination:
+    namespace: production-student-{{ add1 $i }}
+    server: https://kubernetes.default.svc
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: student-{{ add1 $i }}-development
+  namespace: openshift-gitops
+  labels:
+    student: "{{ add1 $i }}"
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+  source:
+    repoURL: https://github.com/lijcam/headsail.git
+    targetRevision: HEAD
+    path: content/challenges/challenge-1
+  destination:
+    namespace: development-student-{{ add1 $i }}
+    server: https://kubernetes.default.svc
+
+{{- end }}

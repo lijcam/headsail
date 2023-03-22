@@ -68,20 +68,3 @@ roleRef:
   kind: Role
   name: headsail-secret-reader
   apiGroup: rbac.authorization.k8s.io
-
-#
-# Syncwave 0
-#
-
-{{- range $i := until (int .Values.studentCount) }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  namespace: auxiliary-student-{{ add1 $i }}
-  name: argocd-env-secret
-type: Opaque
-data:
-  ARGOCD_USERNAME: {{ "admin" | b64enc }}
-  ARGOCD_PASSWORD: {{ index (lookup "v1" "Secret" "openshift-gitops" "argocd-secret").data "admin.password" }}
-{{- end }}
