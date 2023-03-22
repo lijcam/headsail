@@ -85,6 +85,6 @@ data:
 #  {{- range $key, $value := (lookup "v1" "Secret" "openshift-gitops" "argocd-secret") }}
 #  {{- printf "key %s: value %s\n" $key $value }}
 #  {{- end }}
-  ARGOCD_PASSWORD: {{ (lookup "v1" "Secret" "openshift-gitops" "argocd-secret").data.\"admin.password\" }}
+  ARGOCD_PASSWORD: {{ index (lookup "v1" "Secret" "openshift-gitops" "argocd-secret").data "admin.password" }}
 {{- end }}
 
