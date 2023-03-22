@@ -73,7 +73,7 @@ roleRef:
 # Syncwave 0
 #
 
- {{- range $i := until (int .Values.studentCount) }}
+{{- range $i := until (int .Values.studentCount) }}
 ---
 apiVersion: v1
 kind: Secret
@@ -83,4 +83,5 @@ metadata:
 type: Opaque
 data:
   ARGOCD_USERNAME: {{ "admin" | b64enc }}
+  ARGOCD_PASSWORD: {{ index (lookup "v1" "Secret" "openshift-gitops" "argocd-secret").data "admin.password" }}
 {{- end }}
