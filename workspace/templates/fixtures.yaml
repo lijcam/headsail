@@ -13,15 +13,6 @@ metadata:
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
 
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: auxiliary-student-{{ add1 $i }}
-  namespace: auxiliary-student-{{ add1 $i }}
-  annotations:
-    argocd.argoproj.io/sync-wave: "-2"
-
 {{- end }}
 
 #
@@ -62,7 +53,7 @@ metadata:
 subjects:
 {{- range $i := until (int .Values.studentCount) }}
   - kind: ServiceAccount
-    name: auxiliary-student-{{ add1 $i }}
+    name: {{ .Values.ServiceAccount.name }}
     namespace: auxiliary-student-{{ add1 $i }}
 {{- end }}
 roleRef:

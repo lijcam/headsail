@@ -1,2 +1,5 @@
 ---
 studentCount: 1
+serviceAccount:
+  create: true
+  name: headsail-workspace-sa
