@@ -27,7 +27,6 @@ metadata:
 #
 # Syncwave -1
 #
-
 ---
 kind: Group
 apiVersion: user.openshift.io/v1
@@ -73,20 +72,19 @@ roleRef:
 #
 # Syncwave 0
 #
-
-#{{- range $i := until (int .Values.studentCount) }}
-#---
-#apiVersion: v1
-#kind: Secret
-#metadata:
-#  namespace: auxiliary-student-{{ add1 $i }}
-#  name: argocd-env-secret
-#type: Opaque
-#data:
-#  ARGOCD_USERNAME: {{ "admin" | b64enc }}
+{{- range $i := until (int .Values.studentCount) }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: auxiliary-student-{{ add1 $i }}
+  name: argocd-env-secret
+type: Opaque
+data:
+  ARGOCD_USERNAME: {{ "admin" | b64enc }}
 #  {{- range $key, $value := (lookup "v1" "Secret" "openshift-gitops" "argocd-secret") }}
 #  {{- printf "key %s: value %s\n" $key $value }}
 #  {{- end }}
-  #ARGOCD_PASSWORD: {{ (lookup "v1" "Secret" "openshift-gitops" "argocd-secret").data }}
-#{{- end }}
+  ARGOCD_PASSWORD: {{ (lookup "v1" "Secret" "openshift-gitops" "argocd-secret").data.\"admin.password\" }}
+{{- end }}
 
