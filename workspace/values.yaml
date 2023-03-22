@@ -1,5 +1,8 @@
 ---
 studentCount: 1
+
+rbac:
+  create: false
 serviceAccount:
-  create: true
+  create: false
   name: headsail-workspace-sa
