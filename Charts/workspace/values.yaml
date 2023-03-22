@@ -3,11 +3,11 @@ studentCount: 1
 
 
 dependencies:
-- name: headsailAccessControl
+- name: headsail-rbac
   version: "0.1.0"
-  repository: "file://../dependencies/headsailAccessControl"
+  repository: "file://../dependencies/headsail-rbac"
 
-headsailAccessControl:
+headsail-rbac:
   enabled: true
   values:
     studentCount: "{{ .Values.studentCount }}"
