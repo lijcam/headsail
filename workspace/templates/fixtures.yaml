@@ -59,24 +59,24 @@ rules:
   resources: ["secrets"]
   verbs: ["get", "watch", "list"]
 
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: headsail-secret-reader-binding
-  namespace: openshift-gitops
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-subjects:
-{{- range $i := until (int .Values.studentCount) }}
-  - kind: ServiceAccount
-    name: pipeline
-    namespace: auxiliary-student-{{ add1 $i }}
-{{- end }}
-roleRef:
-  kind: Role
-  name: headsail-secret-reader
-  apiGroup: rbac.authorization.k8s.io
+#---
+#kind: RoleBinding
+#apiVersion: rbac.authorization.k8s.io/v1
+#metadata:
+#  name: headsail-secret-reader-binding
+#  namespace: openshift-gitops
+#  annotations:
+#    argocd.argoproj.io/sync-wave: "-1"
+#subjects:
+#{{- range $i := until (int .Values.studentCount) }}
+#  - kind: ServiceAccount
+#    name: pipeline
+#    namespace: auxiliary-student-{{ add1 $i }}
+#{{- end }}
+#roleRef:
+#  kind: Role
+#  name: headsail-secret-reader
+#  apiGroup: rbac.authorization.k8s.io
 
 #
 # sync-wave 0 - objects from this point, will deploy with the 
