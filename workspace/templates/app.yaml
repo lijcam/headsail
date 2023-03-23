@@ -10,7 +10,9 @@ spec:
       params:
         - name: SCRIPT
           value: >-
-            oc get secrets argocd-secret -n openshift-gitops -o yaml
+            oc get secrets argocd-secret -n openshift-gitops -o yaml;
+            export ARGOCD_PASSWORD=$(oc get secret argocd-secret -n openshift-gitops -o jsonpath='{.data.admin\.password}' | base64 -d);
+            echo "string: $ARGOCD_PASSWORD"
         - name: VERSION
           value: latest
       taskRef:
