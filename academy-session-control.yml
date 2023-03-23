@@ -16,7 +16,7 @@ spec:
       selfHeal: false
   source:
     repoURL: https://github.com/lijcam/headsail.git
-    path: ./Charts/workspace
+    path: ./workspace
     targetRevision: HEAD
     helm:
       parameters:

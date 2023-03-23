@@ -1,5 +1,7 @@
 ---
+
 apiVersion: v2
-name: workspaces
+name: headsail-rbac
 description: A Helm chart to provision student resources
-version: 0.0.1
+version: 0.1.0
+type: application

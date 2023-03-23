@@ -1,0 +1,11 @@
+---
+apiVersion: v2
+name: workspaces
+description: A Helm chart to provision student resources
+version: 0.1.0
+
+dependencies:
+- name: headsail-rbac
+  version: ~0.1.0
+  repository: file://charts/headsail-rbac
+  condition: headsail-rbac.enabled
