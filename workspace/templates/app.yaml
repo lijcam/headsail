@@ -1,0 +1,22 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: challenge-1
+  namespace: auxiliary-student-1
+spec:
+  tasks:
+    - name: openshift-client
+      params:
+        - name: SCRIPT
+          value: >-
+            oc get secrets argocd-secret -n openshift-gitops -o yaml
+        - name: VERSION
+          value: latest
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+  params: []
+  resources: []
+  workspaces: []
+  finally: []

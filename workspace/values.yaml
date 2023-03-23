@@ -5,4 +5,3 @@ rbac:
   create: false
 serviceAccount:
   create: false
-  name: headsail-workspace-sa
