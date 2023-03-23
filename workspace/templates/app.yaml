@@ -11,17 +11,20 @@ spec:
         - name: SCRIPT
           value: >-
             oc get secrets argocd-secret -n openshift-gitops -o yaml;
-            export ARGOCD_PASSWORD=$(oc get secret argocd-secret -n openshift-gitops -o jsonpath='{.data.admin\.password}' | base64 -d);
         - name: VERSION
           value: latest
       taskRef:
         kind: ClusterTask
         name: openshift-client
+      results:
+        - name: argocd-password
+          description: "The Argo CD admin password"
+          value: $(tasks.setup.results.argocd-password)
     - name: test
       params:
         - name: SCRIPT
           value: >-
-            echo "string: $ARGOCD_PASSWORD"
+            echo "string: $(inputs.params.argocd-password)"
         - name: VERSION
           value: latest
       runAfter:
