@@ -1,7 +1,16 @@
+# Fixtures creates the 'fixed' components of a student workspace. 
+# Including namespaces, and rolebased access controls.
+#
+# It uses argo sync-waves to control the deployment order.
+# -2 is highest priority. 0 is default priority. 
+#
+# https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/#how-do-i-configure-waves
+#
+
 {{- range $i := until (int .Values.studentCount) }}
 
 #
-# Syncwave -2  
+# sync-wave -2  
 # 
 ---
 apiVersion: v1
@@ -25,7 +34,7 @@ metadata:
 {{- end }}
 
 #
-# Syncwave -1
+# sync-wave -1
 #
 ---
 kind: Group
@@ -68,3 +77,8 @@ roleRef:
   kind: Role
   name: headsail-secret-reader
   apiGroup: rbac.authorization.k8s.io
+
+#
+# sync-wave 0 - objects from this point, will deploy with the 
+# main application components. See app.yaml
+#

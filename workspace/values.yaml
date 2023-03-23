@@ -1,12 +1,8 @@
 ---
 studentCount: 1
 
-headsail-rbac:
-  enabled: true
-  values:
-    studentCount: "{{ tpl .Values.studentCount }}"
-
 rbac:
   create: false
 serviceAccount:
   create: false
+  name: headsail-workspace-sa
