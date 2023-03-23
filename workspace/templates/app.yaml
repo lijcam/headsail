@@ -5,7 +5,7 @@ metadata:
   name: challenge-1
   namespace: auxiliary-student-1
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   tasks:
     - name: openshift-client
