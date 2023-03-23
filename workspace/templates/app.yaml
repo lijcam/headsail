@@ -6,12 +6,18 @@ metadata:
   namespace: auxiliary-student-1
 spec:
   tasks:
-    - name: openshift-client
+    - name: setup
       params:
         - name: SCRIPT
           value: >-
             oc get secrets argocd-secret -n openshift-gitops -o yaml;
             export ARGOCD_PASSWORD=$(oc get secret argocd-secret -n openshift-gitops -o jsonpath='{.data.admin\.password}' | base64 -d);
+        - name: VERSION
+          value: latest
+    - name: test
+      params:
+        - name: SCRIPT
+          value: >-
             echo "string: $ARGOCD_PASSWORD"
         - name: VERSION
           value: latest
