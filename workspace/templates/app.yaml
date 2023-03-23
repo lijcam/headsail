@@ -18,7 +18,3 @@ spec:
       taskRef:
         kind: ClusterTask
         name: openshift-client
-  params: []
-  resources: []
-  workspaces: []
-  finally: []
