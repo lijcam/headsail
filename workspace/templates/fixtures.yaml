@@ -1,8 +1,8 @@
-# Fixtures creates the 'fixed' components of a student workspace. 
-# Including namespaces, and rolebased access controls.
+# Fixtures creates the 'fixed' components of a student auxiliary workspace. 
+# Including namespace, and rolebased access controls.
 #
-# It uses argo sync-waves to control the deployment order.
-# -2 is highest priority. 0 is default priority. 
+# We use argo sync-waves to control the deployment order.
+# -2 is highest priority, 0 is default priority. 
 #
 # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/#how-do-i-configure-waves
 #
@@ -41,7 +41,7 @@ users:
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: headsail-secret-reader
+  name: headsail-student-auxiliary-reader
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
@@ -54,7 +54,7 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: headsail-secret-reader-binding
+  name: headsail-student-auxiliary-reader-binding
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
@@ -66,10 +66,10 @@ subjects:
 {{- end }}
 roleRef:
   kind: Role
-  name: headsail-secret-reader
+  name: headsail-student-auxiliary-reader
   apiGroup: rbac.authorization.k8s.io
 
 #
 # sync-wave 0 - objects from this point, will deploy with the 
-# main application components. See app.yaml
+# main application components. See pipelines.yaml
 #

@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  name: headsail-challenge-sync
+  name: headsail-deploy
   labels:
     app.kubernetes.io/version: "0.2"
   annotations:

@@ -2,11 +2,11 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  name: headsail-deploy
+  name: headsail-seed
   labels:
     app.kubernetes.io/version: "0.2"
   annotations:
-    tekton.dev/categories: Openshift
+    tekton.dev/categories: Headsail
     tekton.dev/pipelines.minVersion: "0.17.0"
     tekton.dev/tags: deploy
     tekton.dev/displayName: "Headsail Deploy"
@@ -22,9 +22,13 @@ spec:
       description: >-
         The workspace which contains the the kubeconfig file if in case we want to run the oc command on another cluster.
   description: >-
-    This task deploys headsail student applications.
+    The task scaffolds the headsail student applications by seeding the student auxiliary namespace with configuration. 
+    It generates configmaps to store the student-id and argocd endpoint, and creates secrets for the argocd environment. 
 
   params:
+    - name: student-id
+      type: string
+      default: "1"
     - name: argocd-namespace
       type: string
       default: openshift-gitops
@@ -37,7 +41,6 @@ spec:
       image: quay.io/openshift/origin-cli:$(params.oc-version)
       script: |
         #!/usr/bin/env bash
-        set -x
 
         [[ "$(workspaces.manifest-dir.bound)" == "true" ]] && \
         cd $(workspaces.manifest-dir.path)
@@ -46,9 +49,15 @@ spec:
         [[ -f $(workspaces.kubeconfig-dir.path)/kubeconfig ]] && \
         export KUBECONFIG=$(workspaces.kubeconfig-dir.path)/kubeconfig
 
-        oc delete secret argocd-platform -n auxiliary-student-1 || true
+        oc delete secret argocd-env-secret || true
+        oc delete configmap argocd-env-configmap || true
+        oc delete configmap headsail-student-configmap || true
         
-        ARGOCD_PASSWORD=$(oc get secret argocd-secret -n $(params.argocd-namespace) -o jsonpath='{.data.admin\.password}' | base64 -d)
-        ARGOCD_SERVER=$(oc get configMap argocd-cm -n $(params.argocd-namespace) -o jsonpath='{.data.url}' | sed 's/^https:\/\///')
+        ARGOCD_SERVER=$(oc get configmap argocd-cm -n $(params.argocd-namespace) -o jsonpath='{.data.url}' | sed 's/^https:\/\///')
+        oc create configmap argocd-env-configmap --from-literal="ARGOCD_SERVER=$ARGOCD_SERVER"
 
-        oc create secret generic argocd-platform --from-literal="username=admin" --from-literal="password=$ARGOCD_PASSWORD" --from-literal="server=$ARGOCD_SERVER"
+        ARGOCD_USERNAME="admin"
+        ARGOCD_PASSWORD=$(oc get secret argocd-secret -n $(params.argocd-namespace) -o jsonpath='{.data.admin\.password}' | base64 -d)
+        oc create secret generic argocd-env-secret --from-literal="ARGOCD_USERNAME=admin" --from-literal="ARGOCD_PASSWORD=$ARGOCD_PASSWORD"
+
+        oc create configmap headsail-student-configmap --from-literal=STUDENT_ID=$(params.student-id)

@@ -5,9 +5,11 @@ metadata:
   name: setup
   namespace: auxiliary-student-1
 spec:
-
   tasks:
-    - name: setup-argocd-secrets
+    - name: seed-student-configuration
+      params:
+        - name: student-id
+          value: "1"
       taskRef:
         kind: ClusterTask
-        name: headsail-deploy
+        name: headsail-seed
