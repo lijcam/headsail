@@ -2,33 +2,12 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: challenge-1
+  name: setup
   namespace: auxiliary-student-1
 spec:
+
   tasks:
-    - name: setup
-      params:
-        - name: SCRIPT
-          value: >-
-            oc get secrets argocd-secret -n openshift-gitops -o yaml;
-        - name: VERSION
-          value: latest
+    - name: setup-argocd-secrets
       taskRef:
         kind: ClusterTask
-        name: openshift-client
-      results:
-        - name: argocd-password
-          description: "The Argo CD admin password"
-          value: $(tasks.setup.results.argocd-password)
-    - name: test
-      params:
-        - name: SCRIPT
-          value: >-
-            echo "string: $(inputs.params.argocd-password)"
-        - name: VERSION
-          value: latest
-      runAfter:
-        - setup
-      taskRef:
-        kind: ClusterTask
-        name: openshift-client
+        name: headsail-deploy
