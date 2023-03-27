@@ -32,13 +32,16 @@ spec:
     - name: argocd-namespace
       type: string
       default: openshift-gitops
+    - name: argocd-username
+      type: string
+      default: "admin"
     - name: oc-version
       description: The OpenShift Version to use
       type: string
-      default: "4.7"
+      default: "v4.12"
   steps:
     - name: oc
-      image: quay.io/openshift/origin-cli:$(params.oc-version)
+      image: registry.redhat.io/openshift4/ose-cli:$(params.oc-version)
       script: |
         #!/usr/bin/env bash
 
@@ -56,8 +59,8 @@ spec:
         ARGOCD_SERVER=$(oc get configmap argocd-cm -n $(params.argocd-namespace) -o jsonpath='{.data.url}' | sed 's/^https:\/\///')
         oc create configmap argocd-env-configmap --from-literal="ARGOCD_SERVER=$ARGOCD_SERVER"
 
-        ARGOCD_USERNAME="admin"
+        ARGOCD_USERNAME="$(params.argocd-username)"
         ARGOCD_PASSWORD=$(oc get secret argocd-secret -n $(params.argocd-namespace) -o jsonpath='{.data.admin\.password}' | base64 -d)
-        oc create secret generic argocd-env-secret --from-literal="ARGOCD_USERNAME=admin" --from-literal="ARGOCD_PASSWORD=$ARGOCD_PASSWORD"
+        oc create secret generic argocd-env-secret --from-literal="ARGOCD_USERNAME=$(params.argocd-username)" --from-literal="ARGOCD_PASSWORD=$ARGOCD_PASSWORD"
 
         oc create configmap headsail-student-configmap --from-literal=STUDENT_ID=$(params.student-id)
