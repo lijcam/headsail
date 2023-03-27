@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: ClusterTask
 metadata:
-  name: headsail-student-deploy
+  name: headsail-student-provision
   labels:
     app.kubernetes.io/version: "0.2"
   annotations:
