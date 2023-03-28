@@ -60,7 +60,7 @@ spec:
         oc create configmap argocd-env-configmap --from-literal="ARGOCD_SERVER=$ARGOCD_SERVER"
 
         ARGOCD_USERNAME="$(params.argocd-username)"
-        ARGOCD_PASSWORD=$(oc get secret argocd-secret -n $(params.argocd-namespace) -o jsonpath='{.data.admin\.password}' | base64 -d)
+        ARGOCD_PASSWORD=$(oc get secret openshift-gitops-cluster -n $(params.argocd-namespace) -o jsonpath='{.data.admin\.password}' | base64 -d)
         oc create secret generic argocd-env-secret --from-literal="ARGOCD_USERNAME=$(params.argocd-username)" --from-literal="ARGOCD_PASSWORD=$ARGOCD_PASSWORD"
 
         oc create configmap headsail-student-configmap --from-literal=STUDENT_ID=$(params.student-id)
