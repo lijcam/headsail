@@ -3,10 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 commonLabels:
-  challenge: "2"
-
-bases:
-  - ../../base
+  headsail-challenge: "2"
 
 resources:
   - leaderboard-microservice.yaml

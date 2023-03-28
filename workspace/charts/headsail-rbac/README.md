@@ -1,1 +1,0 @@
-# Headsail rolebased access control
