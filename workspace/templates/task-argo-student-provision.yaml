@@ -16,28 +16,24 @@ spec:
     This task syncs student Argo CD applications and waits for it to be healthy.
 
   params:
-    - name: student-id
-      type: string
-      default: "1"
-    - name: application-name
-      description: Name of the student application to sync
-      type: string
-    - name: application-path
-      description: Path linking to headsail challenge
-      default: content/challenges/challenge-1
-      type: string
     - name: revision
       description: The revision to sync to
       default: HEAD
       type: string
-    - name: flags
-      default: --
-      type: string
+    - name: git-repo
+      description:  Repository URL
+      default: https://github.com/lijcam/headsail.git
+      type: string 
+    - name: path
+      description: Path in repository to the app directory
+      default: content/challenges/challenge-1
     - name: argocd-version
       default: "1.8"
       type: string
   stepTemplate:
     envFrom:
+      - configMapRef:
+          name: headsail-student-configmap
       - configMapRef:
           name: argocd-env-configmap
       - secretRef:
@@ -49,7 +45,9 @@ spec:
         #!/usr/bin/env bash
         yes | argocd login "$ARGOCD_SERVER" --username="$ARGOCD_USERNAME" --password="$ARGOCD_PASSWORD";
 
-        argocd app delete -l headsail.student-id=$(params.student-id) || true
-        argocd app create 
+        argocd app delete -l headsail.student-id="$STUDENT_ID" || true
 
-        argocd app wait headsail.student-id=$(params.student-id) --health --sync "$(params.flags)"
+        argocd app create student-$STUDENT_ID --repo $(params.git-repo) --path $(params.path) --dest-namespace student-$STUDENT_ID --label headsail.student-id=$STUDENT_ID --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true 
+        argocd app wait headsail.student-id=$STUDENT_ID --health --sync
+
+        argocd logout "$ARGOCD_SERVER"

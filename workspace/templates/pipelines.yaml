@@ -13,3 +13,9 @@ spec:
       taskRef:
         kind: ClusterTask
         name: headsail-seed
+    - name: provision-student-environment
+      runAfter:
+        - seed-student-configuration
+      taskRef:
+        kind: ClusterTask
+        name: headsail-student-provision
