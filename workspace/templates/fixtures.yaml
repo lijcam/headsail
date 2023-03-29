@@ -99,39 +99,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: headsail-cluster-role
-
-#
-# Allow openshift-gitops administor the entire cluster.
-# https://docs.openshift.com/container-platform/4.12/cicd/gitops/configuring-an-openshift-cluster-by-deploying-an-application-with-cluster-configurations.html#gitops-inbuilt-permissions-for-cluster-config_configuring-an-openshift-cluster-by-deploying-an-application-with-cluster-configurations
-#
-
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: secrets-cluster-role
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-rules:
-- apiGroups: [""]
-  resources: ["secrets"]
-  verbs: ["*"]
-
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: cluster-role-binding
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-subjects:
-  - kind: ServiceAccount
-    name: openshift-gitops-argocd-application-controller
-    namespace: openshift-gitops
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
 #
 # sync-wave 0 - objects from this point, will deploy with the 
 # main application components. See pipelines.yaml
