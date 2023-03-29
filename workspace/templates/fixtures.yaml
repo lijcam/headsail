@@ -100,6 +100,12 @@ roleRef:
   kind: ClusterRole
   name: headsail-cluster-role
 
+#
+# Allow openshift-gitops administor the entire cluster.
+# https://docs.openshift.com/container-platform/4.12/cicd/gitops/configuring-an-openshift-cluster-by-deploying-an-application-with-cluster-configurations.html#gitops-inbuilt-permissions-for-cluster-config_configuring-an-openshift-cluster-by-deploying-an-application-with-cluster-configurations
+#
+
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
