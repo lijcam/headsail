@@ -1,12 +1,3 @@
 # Headsail workspace
 
-
-## Troubleshooting
-
-How to setup dependencies 
-https://helm.sh/docs/topics/charts/#chart-dependencies
-
-Secrets not working? Make sure the service account can access the openshift-gitops namespace.
-```
-kubectl auth can-i get secrets --namespace openshift-gitops --as system:serviceaccount:auxiliary-student-1:headsail-workspace-sa
-```
+The workspace helm chart is designed to deploy the components that must be templated. Session resources should be defined in the content directory.
