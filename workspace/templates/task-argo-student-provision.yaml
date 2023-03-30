@@ -43,11 +43,15 @@ spec:
       image: registry.redhat.io/openshift-gitops-1/argocd-rhel8:$(params.argocd-version)
       script: |
         #!/usr/bin/env bash
+        set -x
         yes | argocd login "$ARGOCD_SERVER" --username="$ARGOCD_USERNAME" --password="$ARGOCD_PASSWORD";
 
         argocd app delete -l headsail.student-id="$STUDENT_ID" || true
+        sleep 5
 
         argocd app create student-$STUDENT_ID --repo $(params.git-repo) --path $(params.path) --dest-namespace student-$STUDENT_ID --label headsail.student-id=$STUDENT_ID --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true 
-        argocd app wait headsail.student-id=$STUDENT_ID --health --sync
+        argocd app sync -l headsail.student-id=$STUDENT_ID
+
+        argocd app wait -l headsail.student-id=$STUDENT_ID --health
 
         argocd logout "$ARGOCD_SERVER"
