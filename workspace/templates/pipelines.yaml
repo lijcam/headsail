@@ -10,7 +10,7 @@ spec:
     - name: seed-student-configuration
       params:
         - name: student-id
-          value: "1"
+          value: "{{ add1 $i }}"
       taskRef:
         kind: ClusterTask
         name: headsail-seed

@@ -23,7 +23,7 @@ spec:
     helm:
       parameters:
         - name: studentCount
-          value: "1"
+          value: "2"
   destination:
     namespace: academy-session-control
     server: https://kubernetes.default.svc
