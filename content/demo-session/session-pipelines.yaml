@@ -1,0 +1,29 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: challenge-1
+spec:
+  tasks:
+    - name: updating-resources
+      params:
+        - name: path
+          value: content/demo-session/challenges/challenge-1
+      taskRef:
+        kind: ClusterTask
+        name: headsail-student-provision
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: challenge-2
+spec:
+  tasks:
+    - name: updating-resources
+      params:
+        - name: path
+          value: content/demo-session/challenges/challenge-2
+      taskRef:
+        kind: ClusterTask
+        name: headsail-student-provision

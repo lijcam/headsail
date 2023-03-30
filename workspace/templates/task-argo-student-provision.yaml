@@ -26,7 +26,7 @@ spec:
       type: string 
     - name: path
       description: Path in repository to the app directory
-      default: content/challenges/challenge-1
+      default: content/demo-session/challenges/challenge-1
     - name: argocd-version
       default: "1.8"
       type: string
