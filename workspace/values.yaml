@@ -1,5 +1,5 @@
 ---
-studentCount: 1
+studentCount: 2
 
 rbac:
   create: false

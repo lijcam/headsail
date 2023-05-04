@@ -21,6 +21,8 @@ spec:
     path: ./workspace
     targetRevision: HEAD
     helm:
+      values:
+        - sessions/session-1.yml
       parameters:
         - name: studentCount
           value: "2"

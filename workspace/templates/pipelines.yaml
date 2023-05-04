@@ -1,3 +1,4 @@
+{{- $challenges := .Values.challenges -}}
 {{- range $i := until (int .Values.studentCount) }}
 ---
 apiVersion: tekton.dev/v1beta1
@@ -21,35 +22,22 @@ spec:
         kind: ClusterTask
         name: headsail-student-provision
 
+{{- range $path := $challenges }}
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: challenge-1
+  name: challenge-{{ last (splitList "/" $path) }}
   namespace: auxiliary-student-{{ add1 $i }}
 spec:
   tasks:
     - name: updating-resources
       params:
         - name: path
-          value: content/demo-session/challenges/challenge-1
+          value: {{ $path }}
       taskRef:
         kind: ClusterTask
         name: headsail-student-provision
 
----
-apiVersion: tekton.dev/v1beta1
-kind: Pipeline
-metadata:
-  name: challenge-2
-  namespace: auxiliary-student-{{ add1 $i }}
-spec:
-  tasks:
-    - name: updating-resources
-      params:
-        - name: path
-          value: content/demo-session/challenges/challenge-2
-      taskRef:
-        kind: ClusterTask
-        name: headsail-student-provision
+{{- end }}
 {{- end }}
