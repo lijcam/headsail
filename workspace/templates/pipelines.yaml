@@ -43,4 +43,19 @@ spec:
         name: headsail-student-provision
 
 {{- end }}
+
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: session-deploy
+  namespace: auxiliary-student-{{ add1 $i }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  pipelineRef:
+    name: setup
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+
 {{- end }}
