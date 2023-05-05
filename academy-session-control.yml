@@ -12,6 +12,7 @@ spec:
   project: default
   syncPolicy:
     syncOptions:
+      - ApplyOutOfSyncOnly=true
       - CreateNamespace=true
     automated:
       prune: false
@@ -21,8 +22,8 @@ spec:
     path: ./workspace
     targetRevision: HEAD
     helm:
-      values:
-        - sessions/session-1.yml
+      valueFiles:
+        - ../content/sessions/session-1.yml
       parameters:
         - name: studentCount
           value: "2"
