@@ -16,6 +16,9 @@ spec:
         kind: ClusterTask
         name: headsail-seed
     - name: provision-student-environment
+      params:
+        - name: path
+          value: {{ first $challenges }}
       runAfter:
         - seed-student-configuration
       taskRef:
