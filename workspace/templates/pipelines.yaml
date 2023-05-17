@@ -62,8 +62,6 @@ spec:
             - "pipeline"
             - "start"
             - "setup"
-            - "-s"
-            - "pipeline"
       restartPolicy: Never
 
 {{- end }}
