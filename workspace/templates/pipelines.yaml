@@ -44,18 +44,24 @@ spec:
 
 {{- end }}
 
----
-apiVersion: tekton.dev/v1beta1
-kind: PipelineRun
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: session-deploy
+  name: trigger-setup-pipeline
   namespace: auxiliary-student-{{ add1 $i }}
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
-  pipelineRef:
-    name: setup
-  serviceAccountName: pipeline
-  timeout: 1h0m0s
+  template:
+    spec:
+      containers:
+        - name: trigger-setup-pipeline
+          image: registry.redhat.io/openshift-pipelines/pipelines-cli-tkn-rhel8:v1.10.2-1
+          command: ["tkn"]
+          args:
+            - "pipeline"
+            - "start"
+            - "setup"
+            - "-s"
+            - "pipeline"
+      restartPolicy: Never
 
 {{- end }}

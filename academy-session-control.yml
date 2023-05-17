@@ -1,4 +1,4 @@
-# Development application environment
+# Session control deploys the student pipelines.
 
 ---
 apiVersion: argoproj.io/v1alpha1
