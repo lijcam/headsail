@@ -60,9 +60,8 @@ spec:
           image: registry.redhat.io/openshift-pipelines/pipelines-cli-tkn-rhel8:v1.10.2-1
           command: ["tkn"]
           args:
-            - "pipeline"
-            - "start"
-            - "setup"
+            - "pipelines"
+            - "list"
       restartPolicy: Never
 
 {{- end }}
