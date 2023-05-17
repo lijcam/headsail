@@ -49,6 +49,8 @@ kind: Job
 metadata:
   name: trigger-setup-pipeline
   namespace: auxiliary-student-{{ add1 $i }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   template:
     spec:
