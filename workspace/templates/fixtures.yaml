@@ -22,11 +22,38 @@ metadata:
   labels:
     argocd.argoproj.io/managed-by: openshift-gitops
 
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: auxiliary-student-{{ add1 $i }}
+  name: headsail-pipeline-reader
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+rules:
+  - apiGroups: ["tekton.dev"]
+    resources: ["*"]
+    verbs: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: auxiliary-student-{{ add1 $i }}
+  name: pipeline-reader-binding
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: headsail-pipeline-reader
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: auxiliary-student-{{ add1 $i }}
+
 {{- end }}
 
-#
-# sync-wave -1
-#
 ---
 apiVersion: user.openshift.io/v1
 kind: Group
@@ -113,38 +140,3 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: headsail-cluster-role
-
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  namespace: auxiliary-student-{{ add1 $i }}
-  name: headsail-pipeline-reader
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-rules:
-  - apiGroups: ["tekton.dev"]
-    resources: ["*"]
-    verbs: ["*"]
-
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  namespace: auxiliary-student-{{ add1 $i }}
-  name: pipeline-reader-binding
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: headsail-pipeline-reader
-subjects:
-  - kind: ServiceAccount
-    name: default
-    namespace: auxiliary-student-{{ add1 $i }}
-
-#
-# sync-wave 0 - objects from this point, will deploy with the 
-# main application components. See pipelines.yaml
-#
