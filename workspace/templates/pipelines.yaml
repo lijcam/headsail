@@ -54,7 +54,6 @@ metadata:
 spec:
   template:
     spec:
-      automountServiceAccountToken: true
       containers:
         - name: trigger-setup-pipeline
           image: registry.redhat.io/openshift-pipelines/pipelines-cli-tkn-rhel8:v1.10.2-1
