@@ -49,7 +49,7 @@ spec:
         argocd app delete -l headsail.student-id="$STUDENT_ID" || true
         sleep 5
 
-        argocd app create student-$STUDENT_ID --repo $(params.git-repo) --path $(params.path) --dest-namespace student-$STUDENT_ID --label headsail.student-id=$STUDENT_ID --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true 
+        argocd app create student-$STUDENT_ID --repo $(params.git-repo) --path $(params.path) --dest-namespace student-$STUDENT_ID --label headsail.student-id=$STUDENT_ID --dest-server https://kubernetes.default.svc --sync-option CreateNamespace=true,ApplyOutOfSyncOnly=true 
         argocd app sync -l headsail.student-id=$STUDENT_ID
 
         argocd app wait -l headsail.student-id=$STUDENT_ID --health
