@@ -11,17 +11,26 @@ oc apply -f academy-session-control.yml
 ```
 
 There is a single parameter to adjust the number of student environments. Modify `studentCount` to suit your situation.
-
+ 
 ```
   source:
     repoURL: https://github.com/lijcam/headsail.git
     path: ./workspace
     targetRevision: HEAD
     helm:
+      valueFiles:
+        - ../content/sessions/session-1.yml
       parameters:
         - name: studentCount
           value: "2"
 ```
+
+The student apps can be cleaned up using the `headsail.student-id` label.
+
+```
+oc delete applications -n openshift-gitops -l headsail.student-id
+```
+
 
 ## Known Issues
 
