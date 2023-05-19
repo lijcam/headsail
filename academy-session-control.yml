@@ -23,7 +23,7 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-        - ../content/sessions/session-1.yml
+        - ../content/sessions/kubernetes-101.yml
       parameters:
         - name: studentCount
           value: "2"
