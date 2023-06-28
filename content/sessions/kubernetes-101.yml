@@ -1,3 +1,69 @@
 ---
+
 challenges:
   - content/challenges/deploy-applications-using-the-openshift-console
+
+displayName: Deploy applications using the OpenShift console
+description: Lets play Pacman in 5 minutes or less using the OpenShift console.
+durationMinutes: 10
+introduction: |-
+    It's closing in on five pm, it's Friday afternoon. Excited about the weekend, you're already making mental notes on what you want to do on Saturday.
+    One final sweep of the inbox before knock off, a last-minute request comes from one of the application teams.
+    <blockquote>
+     <b>From</b> pacman-development-team<br>
+     <b>To:</b> deployment-engineering<br>
+     <b>Subject:</b> Urgent app deployment<br><br>
+
+    Hi deployment team,
+    <br><br>
+    Due to project timeline slippages, our next round of testing will be conducted over the weekend. We are also trialling a container-based delivery method of our application.
+    Please ensure our application is deployed to the new OpenShift cluster before Saturday morning.
+    <br><br>
+    Login details and container images will be sent shortly.
+    <br><br>
+    Cheers,<br>
+    Pacman Development Team
+    </blockquote>
+    This is the first time you've worked with Kubernetes, and so late on a Friday! Where do you start?
+
+    Your task, run the container images using only the OpenShift console.
+
+tasks:
+  - tile: Run the container images using only the OpenShift console.
+    description: |-
+      Another email comes through with the location of the container images.
+      The email also included specifics of how the containers should be deployed.
+      You now have all the information you need to deploy the Pacman application.
+
+      Explore the interface to find the [perspective switcher]{{highlight qs-perspective-switcher}} at the top of the navigation, and select **Developer**.
+      The Developer perspective draws focus around the application and microservices for your projects and dissolves the complexity around networking, storage, and administration.
+      
+      Projects are a way for teams to organise their applications and content in isolation from other teams.
+      More information on Projects can be found in the [working with projects](https://docs.openshift.com/container-platform/4.12/applications/projects/working-with-projects.html "Red Hat OpenShift documentation") section of the OpenShift documentation.
+
+      1. From the Developer perspective switch to your project - for example: _student-1_. 
+      
+      1. Enter the [Topology]{{highlight qs-nav-topology}}. The Mongo database has already been deployed, by clicking on the tile we can see additional details of the database deployment.
+
+      1. In the navigation menu, click [Add]{{highlight qs-nav-add}}.
+
+      1. Click [Add]{{highlight qs-nav-add}}, followed by `Container images`. Deploy the Pacman container using these parameters and click **Create**
+
+        | Configuration                        | Parameter                  |
+        |--------------------------------------|----------------------------|
+        | Image name from external registry    | `quay.io/lijcam/pacman:v1` |
+        | Runtime icon                         | nodejs                     |
+        | Application Name                     | pacman                     |
+        | Name                                 | pacman                     |
+        | Create a route                       | tick                       |
+      
+      After completing our deployments, we can return to the [Topology]{{highlight qs-nav-topology}}. You will notice that the Pacman container has a small arrow symbol to the right of it. This links to the route of the application. Clicking it will take you to the Pacman application.
+    review:
+      failedTaskHelp: This task isn't verified yet. Try the task again.
+      instructions: |-
+        #### To verify the application was successfully created:
+        1. Do you see a **mongo** deployment?
+        2. Do you see a **pacman** deployment?
+    summary:
+      failed: Try the steps again.
+      success: You have deployed the Pacman application!

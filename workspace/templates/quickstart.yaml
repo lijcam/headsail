@@ -1,0 +1,28 @@
+# quickstart creates the session ConsoleQuickStart. The quickstart provides written instruction to students.
+
+apiVersion: console.openshift.io/v1
+kind: ConsoleQuickStart
+metadata:
+  annotations:
+    capability.openshift.io/name: Console
+{{- range $path := .Values.challenges }}
+  name: {{ last (splitList "/" $path) }} 
+{{- end }}
+spec:
+  displayName: {{ .Values.displayName }}
+  description: {{ .Values.description | nindent 4 }}
+  durationMinutes: {{ .Values.durationMinutes }}
+  introduction: {{ .Values.introduction | nindent 4 }}
+  tasks: | 
+    {{- range .Values.tasks }}
+    - tile: {{ .tile }}
+      description: |-
+{{ .description | nindent 8 }}
+      review:
+        failedTaskHelp: {{ .review.failedTaskHelp }}
+        instructions: |-
+{{ .review.instructions | nindent 12 }}
+      summary:
+        failed: {{ .summary.failed }}
+        success: {{ .summary.success }}
+    {{- end }}
