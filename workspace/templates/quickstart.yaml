@@ -13,7 +13,7 @@ spec:
   description: {{ .Values.description | nindent 4 }}
   durationMinutes: {{ .Values.durationMinutes }}
   introduction: {{ .Values.introduction | nindent 4 }}
-  tasks: | 
+  tasks:
     {{- range .Values.tasks }}
     - tile: {{ .tile }}
       description: |-
