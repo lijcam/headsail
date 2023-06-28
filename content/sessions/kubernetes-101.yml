@@ -29,7 +29,7 @@ introduction: |-
     Your task, run the container images using only the OpenShift console.
 
 tasks:
-  - tile: Run the container images using only the OpenShift console.
+  - title: Run the container images using only the OpenShift console.
     description: |-
       Another email comes through with the location of the container images.
       The email also included specifics of how the containers should be deployed.

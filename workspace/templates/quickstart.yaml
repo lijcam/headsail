@@ -15,7 +15,7 @@ spec:
   introduction: {{ .Values.introduction | nindent 4 }}
   tasks:
     {{- range .Values.tasks }}
-    - tile: {{ .tile }}
+    - title: {{ .title }}
       description: |-
 {{ .description | nindent 8 }}
       review:
