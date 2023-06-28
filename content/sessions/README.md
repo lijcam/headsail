@@ -9,7 +9,7 @@ source:
   targetRevision: HEAD
   helm:
     valueFiles:
-      - ../content/sessions/session-1.yml
+      - ../content/sessions/kubernetes-101.yml
 ```
 `ValueFiles` is relative to the `source.path` directory so in our instance, it important to include the back reference (`..`).
 
