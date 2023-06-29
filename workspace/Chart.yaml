@@ -3,3 +3,8 @@ apiVersion: v2
 name: workspaces
 description: A Helm chart to provision student resources
 version: 0.1.0
+
+dependencies:
+  - name: quickstart-chart
+    version: 0.1.0
+    repository: "file://./charts/quickstart-chart"

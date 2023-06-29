@@ -1,0 +1,4 @@
+apiVersion: v2
+name: quickstart-chart
+version: 0.1.0
+description: Helm chart for rendering headsail session quickstart components
