@@ -39,7 +39,7 @@ tasks:
       The Developer perspective draws focus around the application and microservices for your projects and dissolves the complexity around networking, storage, and administration.
       
       Projects are a way for teams to organise their applications and content in isolation from other teams.
-      More information on Projects can be found in the [working with projects](https://docs.openshift.com/container-platform/4.12/applications/projects/working-with-projects.html "Red Hat OpenShift documentation") section of the OpenShift documentation.
+      More information on Projects can be found in the [working with projects](https://docs.openshift.com/container-platform/4.12/applications/projects/working-with-projects.html "Red Hat OpenShift documentation"){:target="_blank"} section of the OpenShift documentation.
 
       1. From the Developer perspective switch to your project - for example: _student-1_. 
       
@@ -49,13 +49,13 @@ tasks:
 
       1. Click [Add]{{highlight qs-nav-add}}, followed by `Container images`. Deploy the Pacman container using these parameters and click **Create**
 
-        | Configuration                        | Parameter                  |
-        |--------------------------------------|----------------------------|
-        | Image name from external registry    | `quay.io/lijcam/pacman:v1` |
-        | Runtime icon                         | nodejs                     |
-        | Application Name                     | pacman                     |
-        | Name                                 | pacman                     |
-        | Create a route                       | tick                       |
+        | Configuration                        | Parameter                          |
+        |--------------------------------------|------------------------------------|
+        | Image name from external registry    | `quay.io/lijcam/pacman:v1`{{copy}} |
+        | Runtime icon                         | nodejs                             |
+        | Application Name                     | pacman                             |
+        | Name                                 | pacman                             |
+        | Create a route                       | tick                               |
       
       After completing our deployments, we can return to the [Topology]{{highlight qs-nav-topology}}. You will notice that the Pacman container has a small arrow symbol to the right of it. This links to the route of the application. Clicking it will take you to the Pacman application.
     review:
